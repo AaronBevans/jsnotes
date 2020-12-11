@@ -1,0 +1,156 @@
+body{
+    font-size: 1.125rem; /*relative to default root element(body) 16px*/
+    margin: 0;
+}
+
+/*Typography*/
+h1,
+h2{/*can apply same styling to various different elements*/
+    font-family: 'Lora', sans-serif;
+    font-weight: 400;/*boldness*/
+    
+}
+
+h2{
+    color: #1792d2;
+}
+
+h3{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: .95rem;
+    color: #1792d2;
+}
+
+a{
+    color: #1792d2;
+}
+
+a:hover,
+a:focus{
+    color: #1792d2;
+}
+
+strong{
+    font-weight: 700;/*modifies the amount of boldness on an element.*/
+}
+
+/*layout*/
+
+/*Logo subtitle*/
+.title-div{
+    font-weight: 700;
+    color: #1792d2;
+    font-size: .85rem;
+    padding: 1em;
+    margin: 0;
+}
+
+.article-title {
+    font-size: 1.5rem;
+}
+
+.color-div{
+    width: 90%;
+    border: solid black 2.5px;
+    background: salmon;
+    display: block;
+    text-align: center;
+}
+
+.article-read-more,/*can apply the same style on two different classes.*/
+.article-info {
+    font-size: .875rem;
+}
+
+.article-read-more{
+    color: #1792d2;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.article-read-more:hover,/*can apply the same style on two different classes.*/
+.article-read-more:focus{
+    color: #1792d2;
+    text-decoration: underline;
+}
+
+.article-info{
+    margin: 2em 0;
+}
+
+
+.container{ /*container needed for initial box-model*/
+    border: solid black 5px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
+    flex-direction: column;
+}
+
+header{
+    border: solid white 5px;
+    padding: 1em 0;
+    text-align: center;
+}
+
+
+nav ul{ /*contains all list elements*/
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 1em;
+}
+
+nav li{ /*contains all list items*/
+    margin-left: 2em;
+}
+
+nav a{ /*contains all list links*/
+    padding: .25em 0;
+    text-decoration: none;
+    color: salmon;
+}
+
+/* conditional style applied when screen is enlarged at a max width of */
+@media(min-width: 675px){
+    .flex{
+        flex-direction: row;
+    }
+
+    main{
+        width: 75%;
+    }
+
+    aside{
+        width: 20%;
+    }
+}
+
+
+/* conditional style applied when screen is enlarged at a max width of */
+@media(max-width: 675px){
+
+    nav ul{
+        flex-direction: column;
+    }
+
+    nav li{
+        margin: .5em 0;
+    }
+    
+}
+
+.divider{
+    border-bottom: solid black 1px;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+}
+
+
+

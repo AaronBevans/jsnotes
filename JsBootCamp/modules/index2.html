@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='root'></div>
+    
+    <script>
+
+//can use 'export default' to export other data all at once.
+
+/* export default function getDate(){
+    const year = new Date()
+    const date = `${new Date()}, year: ${year}`//store variable within another.
+    return date
+}*/
+
+/* export*/ function getDate(){
+    const date = new Date()
+    return date
+}
+
+//exporting multiple properties.
+//named export.
+
+/* export {getDate(), year}*/const year = new Date().getFullYear()
+
+//importing multiple properties by way of 'export default' and without curly brackets.
+//named import.
+
+// import getUser from './utils/getUser.js'
+
+/* import { getDate, year as currentYear } from './date.js'*/
+
+const currentYear = 2021 /*we need to apply 'aliasing' to variables and functionality that have
+the same name as existing pieces of data; using 'as' keyword*/
+
+class App{
+    constructor(){
+        this.render()
+    }
+
+    render(){
+        document.getElementById('root').innerHTML = `
+            <div>Date: ${getDate()}</div>
+            </br>
+            <div>Year: ${currentYear}</div>
+        `
+    }
+}
+new App()
+
+//import and export modules
+
+/*export*/let number = 1
+
+/*export*/ function shareName(){
+    let name = `cyberman is number ${number}`
+    return name
+}
+
+/*export default*/ function engineeringType(){
+    let engineer = 'software engineering'
+    return engineer
+}
+//export {shareName, engineeringType, number}
+
+//importing data and using 'aliasing' with 'as' keyword.
+//import {shareName, engineeringType, number as newNumber} from './fakeFolder/fakeModule.js'
+let priority = number
+
+class NewApp{
+    constructor(){
+        this.render()
+    }
+    render(){
+        document.getElementById('root').innerHTML = `
+            <div>Name: ${shareName()}</div>
+            <div>Engineering Type: ${engineeringType()} is number ${priority}.</div>
+        `
+    }
+}
+new NewApp()
+
+//know what 'this' is at any time.
+//'this' in reference to the global scope/window context.
+function useThis(){
+    console.log(this)//window object
+    this.number = 1//property belongs to window object.
+    console.log(number)//log property.
+}
+useThis()
+
+
+/*using 'this' in reference to object properties and methods.*/
+const angelicaObject = {
+    firstName: 'angelica',
+    lastName: 'criado',
+    priority: 'mother',
+    age: 27,
+    functionality(){
+        console.log(
+            `${this.firstName} ${this.lastName} 
+            is a good ${this.age} year old${this.priority}.`
+        )
+    }
+}
+angelicaObject.functionality()
+
+/*using 'this' in reference to a method on an object,
+ and on a nested object.*/
+const aaronObject = {
+    firstName: 'Aaron',
+    engineeringType: 'software engineer',
+    language: 'javaScript',
+    devLanguageMethod(){
+        console.log(`I code primarily in ${this.language}`)
+    },
+    development: {//nested object.
+        focus: 'front end',
+        library0: 'jQuery',
+        library1: 'react.js',
+        technique: 'ajax',
+        devLibToolsMethod(){//nested object method.
+            console.log(`I also develop ${this.focus} apps with tools such as; 
+${this.library0} and ${this.library1}.`)
+        }
+    }
+}
+aaronObject.devLanguageMethod()
+aaronObject.development.devLibToolsMethod()
+
+/*using 'this' in reference to a constructor function
+or class constructor.*/
+
+function User(alias, language){
+    this.alias = alias
+    this.language = language
+}
+
+User.prototype.getUser = function(){
+    console.log(`the new user's alias is ${this.alias} and he codes with ${this.language}`)
+}
+const userData = new User('cyberman', 'javaScript')
+userData.getUser()
+
+class UserClass{
+    constructor(alias, language, specialized = []){
+        this.alias = alias
+        this.language = language
+        this.specialized = specialized
+        this.shareUserData()//binding method to class, object.
+    }
+
+    specialSkill(specialized){
+        return this.specialized = [...this.specialized, specialized]
+    }
+
+   shareUserData(){//method
+        console.log(`new user: ${this.alias}; programming language: ${this.language}; specialized: ${this.specialized}`)
+    }
+}
+const userDevData = new UserClass('cyberman', 'javaScript')//binding data to class, object.
+console.log(userDevData.specialSkill('user interfaces'))
+userDevData.shareUserData()
+
+/*'this' in reference to constructor function
+and in reference to a class constructor*/
+
+/*'this' in reference to constructor function*/
+function Constructor(alias, language, tool = []){
+    this.alias = alias
+    this.language = language
+    this.tool = tool
+}
+
+Constructor.prototype.devTool = function(tool){
+    this.tool = [...this.tool, tool]
+}
+
+const newDev = new Constructor('cyberman', 'javaScript')
+newDev.devTool('ajax')
+newDev.devTool('REST')
+newDev.devTool('react.js')
+console.log(newDev.tool)
+
+
+/*
+'this' in reference to constructor function
+*/
+function NewLanguageConstructor(
+    firstLanguage, secondLanguage, thirdLanguage, tools = []){
+    this.firstLanguage = firstLanguage
+    this.secondLanguage = secondLanguage
+    this.thirdLanguage = thirdLanguage
+    this.tools = tools
+}
+
+NewLanguageConstructor.prototype.displayAll = function(/*firstLanguage, secondLanguage, thirdLanguage*/){
+    let devLanguages = [
+        this.firstLanguage, 
+        this.secondLanguage, 
+        this.thirdLanguage
+    ]
+    console.log(devLanguages)
+}
+
+NewLanguageConstructor.prototype.shareTool = function(tools){//function needs an argument when invoked
+    return this.tools = [...this.tools, tools]
+}
+
+const devLanguages = new NewLanguageConstructor(
+    'javaScript', 'python', 'c++'
+)
+
+devLanguages.displayAll()
+devLanguages.shareTool('react.js')
+console.log(devLanguages.tools)//by way of method we return props-array that lives on object.
+
+/*
+'this' in reference to a class constructor
+*/
+class LanguageAndSkills{
+    constructor(language, specialization, tools, newSkill = []){
+        this.language = language
+        this.specialization = specialization
+        this.tools = tools
+        this.newSkill = newSkill
+        this.listDevSkills()//method is bound to class constructor
+        this.newSkillList()//method is bound to class constructor
+    }
+
+    listDevSkills(language, specialization, tools){
+        let skillsArray = [
+            this.language, 
+            this.specialization, 
+            this.tools
+        ]
+        console.log(skillsArray)
+    }
+
+    newSkillList(newSkill){
+        return this.newSkill = [...this.newSkill, newSkill]
+    }
+}
+
+let allDevSkills = new LanguageAndSkills(
+    'javaScript', 
+    'user interface development', 
+    'react.js library'
+)
+
+allDevSkills.listDevSkills()
+console.log(allDevSkills.specialization)
+allDevSkills.newSkillList('server side python programming')
+
+function regulateProps(){
+    let properArray = allDevSkills.newSkill.shift()
+    properArray = allDevSkills.newSkill
+    console.log(properArray)
+}
+regulateProps()
+
+/*
+'this' in reference to a DOM event handler
+*/
+//event.target targets accesses elements in the DOM.
+
+const button = document.createElement('button')
+
+button.textContent = 'click me'
+
+document.body.appendChild(button)
+
+document.body.addEventListener('click', function(){
+    console.log(this)
+    /*
+    will log out the <button> or any element that was created 
+    with in the 'window', and on the DOM when button is clicked.
+    */
+})
+
+/*
+    new functions that explicily determine what 'this' refers to
+    call(), apply(), bind(), 
+*/
+
+/*
+call();
+
+used to dynamically establish 'this' context between and unrelated function
+and object to acess and return properties.
+*/
+
+const iUser = {
+    alias: 'cyberman',
+    title: 'computer programmer'
+}
+
+function setThisFun(){
+    console.log(`${this.alias} is a ${this.title}`)
+}
+setThisFun.call(iUser)
+
+/*
+apply()
+similar to call(), but we need to pass other arguments within 
+obejct-array literal.
+*/
+
+const iNewUser = {
+    newAlias: 'cyberman',
+    newTitle: 'software engineer'
+}
+
+function shareDevProps(city, state, country){
+    console.log(
+        `${this.newAlias} is a ${this.newTitle} in ${city}, ${state} ${country}.`
+        )
+}
+
+shareDevProps.call(iNewUser, 'san jose', 'california', 'united states')
+shareDevProps.apply(iNewUser, ['san jose', 'california', 'united states'])
+
+const nestedObjFun = {
+    devAlias: 'cyberman',
+    title: 'software engineer',
+    developmentType: {
+        language: 'javaScript',
+        specialization: 'user interfaces',
+        developmentTools: 'react.js',
+        shareData(){
+            console.log(`${this.language};  ${this.developmentTools}`)
+        }
+    }
+}
+nestedObjFun.developmentType.shareData()
+
+//'this' in reference to window
+function getThis(){
+    console.log(this)
+}
+getThis()
+
+//'this' in reference to an object/nested object, method and object properties
+const programmerObj = {
+    programmerAlias: 'cyberman',
+    developerLanguage: 'javaScript',
+    developerMethod(){
+        console.log(`my alias is ${this.programmerAlias} my primary development language is ${this.developerLanguage}`)
+    },
+    developmentTool: {
+        developerLibrary: 'react.js',
+        supplimentalDevLanguage: 'python 3',
+        secondaryDevMethod(){   
+            console.log(`I develop applications with the ${this.developerLibrary} library, and use ${this.supplimentalDevLanguage}
+            for server side scripting and automation.`
+            )
+        }
+    }
+}
+programmerObj.developerMethod()
+programmerObj.developmentTool.secondaryDevMethod()
+
+//'this' in reference to a constructor function
+function ManageThisFun(devAlias, devLanguage, devTools = []){
+    this.devAlias = devAlias
+    this.devLanguage = devLanguage
+    this.devTools = devTools
+}
+ManageThisFun.prototype.getDevSkills = function(devTools){
+    return this.devTools = [...this.devTools, devTools]
+}
+
+let devSkills = new ManageThisFun('cyberman', 'javaScript')
+
+console.log(devSkills.devAlias)
+console.log(devSkills.devLanguage)
+devSkills.getDevSkills('react.js')
+console.log(devSkills.devTools)
+
+//'this' in reference to a class constructor
+class DeveloperClass{
+    constructor(development, language, framework){
+        this.development = development
+        this.language = language
+        this.framework = framework
+        this.shareDevData()
+    }
+
+    shareDevData(development, language, framework){
+        let devData = [
+            this.development,
+            this.language,
+            this.framework
+        ]
+        console.log(devData)
+    }
+}
+
+let newDevClass = new DeveloperClass('user interface development', 'javaScript', 'react.js')
+newDevClass.shareDevData()
+
+//'this' in context of DOM element
+let newDiv = document.createElement('div')
+document.body.appendChild(newDiv)
+newDiv.innerHTML = '<h1>Retrieve this DOM element.</h1>'
+document.body.addEventListener('mouseover', function(){
+    console.log(this)
+})
+
+/*
+STATE & STATE MANAGEMENT
+
+Understanding State and State Management
+
+State; data that has to be manages in application.
+State of app all of data we must keep track of in order for it to work.
+
+State tells us the => status of our app.
+
+* values to keep track of should be in a centralized place rather
+than spread out.
+
+* use this.state = {} in the class constructor() to store state.
+
+* do not! this.update.state = directly, we must create a 
+this.state.clone = and use {...spread operator, then: updateState}
+*/
+//challange; try creating a button that will toggle off messages when clicked.zx
+class stateManagingApp{
+    //class/object properties; where state comes from.
+    constructor(){
+        //html element with id is a property to class/object.
+        // this.$userMessage = document.getElementById('user-message')
+        this.state = {
+            isAuth: false,
+            error: ''
+        }
+        this.checkAuth()//method cotaining logic that authenticates user boolean value.
+        this.render()//renders html from DOM.
+    }
+
+    checkAuth(){
+        const user = true
+        if(user){
+            this.state = {...this.state, isAuth: true}
+            // this.$userMessage.textContent = 'welcome back!'
+
+        }else{
+            this.state = {...this.state, error: 'you must sign in'}
+
+            // this.$userMessage.textContent = 'You must sign in!'
+            // this.$userMessage.style.color = 'red'
+        }
+    }
+
+    render(){
+        const {isAuth, error} = this.state//where state comes from.
+
+        document.getElementById('root').innerHTML = `
+            <div style="color: ${error && 'red'}">
+                ${isAuth ? 'welcome back!' : error}
+            </div>
+        `
+    };
+}
+new stateManagingApp()
+
+/*
+How reducers help manage state.
+
+- Helps us manage app state.
+
+- reducers are instanced 'pure functions'; function will always give us the same
+value no matter what value is provided to it.
+
+- action communicates to the reducer that we want to 
+provide a different state update.
+
+ - action; object
+
+*/
+
+//reducer 1 (simple state incrementing)
+function countReducer(count, action){
+    switch(action.type){
+        case 'INCREMENT':
+            return count + 1 
+        case 'DECREMENT':
+            return count - 1
+        default:
+            return count;
+    }
+}
+const increCount = countReducer(0, {type: 'INCREMENT'})// returns different state update
+console.log(increCount === 1)
+
+//stored within variable to access later.
+const decreCount = countReducer(1, {type: 'DECREMENT'})//returns different state update
+console.log(decreCount === 0)
+
+
+const aliasObj = {//state is not set, needs update.
+    alias: ''
+}
+
+//reducer 2 (setting undefined state)
+function aliasReducer(state, action){
+    switch(action.type){
+        case 'SET_ALIAS':
+            return {...state, alias: state.alias = 'cyberman'}// returns different state update
+        case 'HIDE_ALIAS':
+            return {...state, alias: state.alias = undefined}//returns different state update
+        default: 
+            return state
+    }
+}
+const setDevAlias = aliasReducer(aliasObj, {type: 'SET_ALIAS'})
+console.log(setDevAlias.alias)
+
+const hideDevAlias = aliasReducer(aliasObj, {type: 'HIDE_ALIAS'})
+console.log(hideDevAlias.alias)
+
+
+
+const userStateData = {//state set, needs update.
+    alias: 'aaron',
+    language: ''
+}
+
+//reducer 3 (updating state)
+function manageUserState(state, action){
+    switch(action.type){
+        case 'CHANGE_ALIAS':
+            return { ...state, alias: action.payload.alias}//use payload when changing original set state.
+        case 'CHANGE_LANGUAGE':
+            return { ...state, language: action.payload.language}
+        default:
+            return state
+    }
+}
+
+const aliasResult = manageUserState(userStateData, { 
+    type: 'CHANGE_ALIAS', payload: {//use payload when changing original set state.
+    alias: 'cyberman'
+}})
+console.log(aliasResult.alias === 'cyberman')
+
+const languageResult = manageUserState(userStateData, { 
+    type: 'CHANGE_LANGUAGE',
+    payload: {
+        language: 'javaScript'           
+}})
+console.log(languageResult.language === 'javaScript')
+
+
+////////////////////////////
+//state incrementing reducer
+function incrementState(count, action){
+    switch(action.type){
+        case 'INCREMENT': 
+            return count + 1
+        case 'DECREMENT':
+            return count - 1
+        default:
+            return count
+    }
+}
+const incrementReducer = incrementState(5, { type: 'INCREMENT'})
+console.log(incrementReducer)
+
+const decrementReducer = incrementState(6, {type: 'DECREMENT'})
+console.log(decrementReducer)
+
+//setting state data reducer
+const undefinedStateObj = {
+    devType: '',
+    devLanguage: ''
+}
+
+function setStateReducer(state, action){
+    switch(action.type){
+        case 'DEFINE_DEVTYPE':
+            return {...state, devType: state.devType = 'user interface development'}
+        case 'DEFINE_DEVLANGUAGE':
+            return {...state, devLanguage: state.devLanguage = 'javaScript'}
+        default:
+            return state
+    }
+}
+
+const defineDevType = setStateReducer(undefinedStateObj, {type: 'DEFINE_DEVTYPE'})
+console.log(defineDevType.devType)
+
+const defineDevLanguage = setStateReducer(undefinedStateObj, {type: 'DEFINE_DEVLANGUAGE'})
+console.log(defineDevLanguage.devLanguage)
+
+
+
+
+//updating state reducer
+const developmentDataObj = {
+    developmentType: 'front end developer',
+    developmentLanguage: 'javaScript'
+}
+function updatingDevStateReducer(state, action){
+    switch(action.type){
+        case 'UPDATE_DEVTYPE_STATE':
+            return {
+                ...state, developmentType: action.payload.developmentType
+            }
+        case 'UPDATE_DEVLANGUAGE_STATE':
+            return {
+                ...state, developmentLanguage: action.payload.developmentLanguage
+            }
+        default:
+            return state
+    }
+}
+
+const updatedDevTypeState = updatingDevStateReducer(developmentDataObj, {type: 'UPDATE_DEVTYPE_STATE', payload: {
+    developmentType: 'user interface software engineer'
+}})
+console.log(updatedDevTypeState.developmentType === 'user interface software engineer')
+
+const updatedDevLangState = updatingDevStateReducer(developmentDataObj, {type: 'UPDATE_DEVLANGUAGE_STATE', payload: {
+    developmentLanguage: 'browser scripting'
+}})
+console.log(updatedDevLangState.developmentLanguage === 'browser scripting')
+
+//updating state reducer 2
+const additionalDevStateObj = {
+    devType: 'front end engineering',
+    devLanguage: 'scripting',
+    framework: 'reusable components'
+}
+function updateAddedState(state, action){
+    switch(action.type){
+        case 'UPDATE_ENGINEERTYPE':
+            return {...state, devType: action.payload.devType}
+        case 'UPDATE_LANGUAGE':
+            return {...state, devLanguage: action.payload.devLanguage}
+        case 'UPDATE_FRAMEWORK':
+            return {...state, framework: action.payload.framework}
+        default:
+            return state
+    }
+}
+const addedDevState = updateAddedState(additionalDevStateObj, {type: 'UPDATE_ENGINEERTYPE', payload: {
+    devType: 'user interface software engineering'
+}})
+console.log(addedDevState.devType)
+
+///////////////
+//setting state with reducer function
+const stateObj = {
+    devState: undefined,
+    langState: undefined
+}
+
+function setDevStateReducer(state, action){
+    switch(action.type){
+        case 'SET_DEV':
+            return {...state, devState: state.devState = 'front end developer'}
+        case 'SET_LANG': 
+            return {...state, langState: state.langState = 'javaScript'}
+        default: 
+            return state
+    }
+}
+const devStateReduce = setDevStateReducer(stateObj, {type: 'SET_DEV'})
+console.log(devStateReduce.devState)
+
+const langStateReduce = setDevStateReducer(stateObj, {type: 'SET_LANG'})
+console.log(langStateReduce.langState)
+
+//updating state with reducer function
+const newStateObject = {
+    development: 'software development engineering',
+    language: 'scripting language'
+}
+
+function updateStateReducer(state, action){
+    switch(action.type){
+        case 'DEVELOPMENT_type':
+            return {...state, development: action.payload.development}
+        case 'LANGUAGE_type': 
+            return {...state, language: action.payload.language}
+        default:
+            return state
+    }
+}
+const updatedDevState = updateStateReducer(newStateObject, 
+{type: 'DEVELOPMENT_type', payload:{
+    development: 'front end development'
+}})
+console.log(updatedDevState.development)
+
+const updatedLangState = updateStateReducer(newStateObject, 
+    {type: 'LANGUAGE_type', payload: {
+        language: 'javaScript/es6'
+}})
+console.log(updatedLangState.language)
+
+// const lettersArray = [
+//     'a', 'b', 'b', 'c', 'c'
+// ]
+
+// const set1 = new Set([1, 1, 2, 3, 4, 5, 6, 7])
+// const set2 = new Set([...set1])
+// console.log(set2)
+// console.log(new Set([...lettersArray]))
+
+//avoid
+
+
+
+
+
+
+
+
+    </script>
+</body>
+    <!-- /*
+- variables
+- data types ('5 - 6 different types')
+- strings
+- short circuiting
+- ternary
+- conditionals
+- switch statements
+- functions; accessing global variables/scope
+- closures/ partial application
+- default parameters
+- arrow functions
+- call-back functions; A callback is a function passed as an argument to another function
+This technique allows a function to call another function.
+A callback function can run after another function has finished
+- object literals; destructuring, ...object spread
+- map object type; .set(), forEach(()=>{}), ...map object spread
+
+- PRACTICE ARRAY METHODS/OPERATIONS -
+
+- map(()=>{})
+- filter(()=>{})
+- reduce(()=>{})
+- some(()=>{}) / every(()=>{})
+- find(()=>{})
+- forEach(()=>{})
+
+Plus:
+
+- findIndex()
+- slice(beginning place, ending place)
+- concat()
+- includes()
+- array destructuring
+- array spread operator [...arraySpread]
+- Object.keys()
+- Object.values()
+- Object.entries()
+- for-in loop; iterates over object data
+- sets
+- for-of loop; iterates over new Set data;
+sets maintain uniques values; unless different object type.
+- for-loop; iterates over an array's contents.
+- constructor functions
+- classes
+- class method development and logic
+- prototype.chaining
+- class extends keyword
+- super(); function/method used for child classes 
+when passing down inheriting properties
+from parent classes.
+*/
+
+/*
+PRACTICE CLASS METHODS/OPERATIONS
+
+classes;
+
+Classes are a template for creating objects.
+They encapsulate data with code to work on that data.
+Classes in JS are built on prototypes but also have some syntax and
+semantics that are not shared with ES5 classalike semantics.
+
+- sharing methods between parent and children classes.
+- how to use 'get' and 'set' keywords on classes.
+- .bind() explicitly binds a method(s) to classes within the constructors().
+.bind() makes a method refer to a class/value. 
+
+- DOM; Document Object Model.
+- what is the DOM?
+- Get single and multiple elements
+- Create and modify HTML elements
+- Dynamically add css styles
+- Work with and understand events
+
+//what is the DOM?
+//DOM; Document Object Model; document; lives on the window.
+/*DOM is an object that represents all of the HTML as objects that can 
+be modified by js.*/
+/*
+- get single element tags containing id from DOM; document.getElementById()
+- get multiple elements with matching tags from DOM; document.getElementsByTagName()
+- get first single element from DOM id/class; document.querySelector()
+- get multiple elements from DOM id/class; document.querySelectorAll()//most superior.
+- access a tag and link with forEach(()=>{}), conditionals and .matches('tag type[]'). method.
+- creating and modifying html elements; 
+- applying class selector to an element with .className = ''
+- add events to elements with .addEventListener(()=>{
+})
+
+- loop over all of the same events with .forEach(()=>{ and add styling to multiple elements.
+    .addEventListener(('fired event', param)=>{
+        .style. = ''
+    })
+})
+- peform event actions on elements that are closest()/macthes() a targeted element with;
+
+- Ajax;
+
+- Working with AJAX; asynchronus javaScript;
+With Ajax, web applications can send and retrieve data from a server asynchronously 
+(in the background) without interfering with the display and behaviour of the existing page.
+- AJAX enables a Web page to update just part of a page 
+without disrupting what the user is doing.
+- non-blocking; can continue operations when others are taking longer to complet.
+- ajax allows multiple lines of code to run.
+- ajax; some operations will take an unknown amount of time to execute.
+- problems with callbacks
+- fix callback hell (an abundance of callback functions.); new Promise((resolve, reject)=>{
+new Promise(()=>{}); type of ajax constructor function.
+})
+
+- call-back functions; A callback is a function passed as an argument to another function
+This technique allows a function to call another function.
+A callback function can run after another function has finished.
+
+- new Promise(()=>{}); is a constructor function; returns an instance of itself.
+promises; contain three different states when created; pending, fulfilled, rejected.
+promises; start with the 'pending' state until promise is either 'fulfilled' or 'rejected'.
+promises;
+
+- .fetch() method api; used to make an ajax network request to retrieve data from 
+REST api architectual code.
+CRUD; CRUD is an acronym that comes from the world of computer programming and 
+refers to the four functions that are considered necessary to implement a 
+persistent storage application: create, read, update and delete. 
+
+- CRUD; v
+Create; POST method; creates resource/data.
+Rread; GET method; retrieves data from database.
+Update; PUT/PATCH methods; updates data.
+Delete; DELETE method; allows deletion of data.
+
+- Dead-simple Promises with async-await; 
+allows us to avoid writting multiple callback functions
+when using the fetch() api/method
+
+- async functions; always returns a promise
+The async and await keywords enable asynchronous, 
+promise-based behavior to be written in a cleaner style, 
+avoiding the need to explicitly configure promise chains.
+
+
+/*
+- async await pauses promise code until all requests are resolved;
+not using .then() or .catch() or .finally().
+*/
+
+/*
+- async functions using the fetch() api
+used to write cleaner promises; avoids callback hell.
+
+- await; The await expression causes async function execution to pause until a Promise is settled 
+(that is, fulfilled or rejected), and to resume execution of the async function after fulfillment.
+
+//try keyword runs code black and 'tries' to verify that code contains no errors.
+
+//catch is used to notify user that there is an error when retrieving data.
+
+//can nest a Promise inside of an async function.
+
+// async, await;  pauses promise code until all requests are resolved(no use of catch).
+
+// async functions using the fetch() api.
+used to write cleaner promises; avoids callback hell.
+use of await(early on)
+not using .then() or .catch() or .finally().
+
+
+// write cleaner promises with async, await 
+catch errors on try{} & catch(error){}.
+handle errors.
+
+// CREATE, READ, UPDATE, DELETE(CRUD) data while using ftech() api.
+
+//MODULES: Essential Concepts
+
+- Modules; split up code into multiple files while still sharing code.
+isolate js functionality when sharing code between files.
+
+- Modules; are just a files.
+
+- sharing code between files; 
+
+- IMPORT; allows us to import functionality from different files/scripts(modules)
+
+- EXPORT; allows us to lable variables and functions outside of a module.
+
+- as; is used to 'alias' imported variables and data that are named the same as others {data, data1 as newData}
+
+- export default; exports all data/one piece of data at one time.
+
+- export {} can export various pieces of code at once (end of file).
+
+- 'THIS'; know what 'this' keyword is at any time.
+
+'this' refers to: 
+1) in the global context (window)
+2) as a property or on a method within an object
+3) as a property or method on a constructor function or class constructor
+4) as a DOM event handler
+
+console.log(this)
+
+/*
+will log out the <button> etc. or any element that was created 
+with in the 'window', and on the DOM when button is clicked.
+*/
+
+/*
+new functions that explicily determine what 'this' refers to
+call(), apply(), bind(), 
+*/
+
+/*
+call(); one time use function
+
+used to dynamically establish 'this' context between and unrelated function
+and object to acess and return properties.
+*/
+
+/*
+
+apply(); one time use function
+
+similar to call(), but we need to pass other arguments within 
+obejct-array literal.
+*/
+
+/*
+bind(); one time use function
+
+gives brand new function with explicitly bound 'this'
+always bound to context that we originally provide to it.
+
+allows us to call function as many time as we need.
+
+* arrow functions do not have their own 'this' *
+*/
+
+/*
+STATE & STATE MANAGEMENT
+
+Understanding State and State Management
+
+State; data that has to be manages in application.
+State of app all of data we must keep track of in order for it to work.
+
+State tells us the => status of our app.
+
+* values to keep track of should be in a centralized place rather
+than spread out.
+
+* use this.state = {} in the class constructor() to store state.
+
+* do not! this.update.state = directly, we must create a 
+this.state.clone = and use {...spread operator, then: updateState}
+
+* create within constructor, and use render() method to create some html layout along with
+js logic/functionality.
+
+* use object destructuring when render() html, to make reference
+to where state comes from.
+
+///
+REDUCER Functions
+
+* reducer functions are used to update state within apps.
+Reducers use switchStatement (& action.type){} 'KEYWORD' to set or update state.
+
+set state => use state.stateSproperty = ''.
+update state => use action.payload.stateProperty.
+*/
+
+
+
+
+
+-->
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>BrzyNotes</title>
+    </head>
+    <body>
+         <!--
+            Change h1 title to "My Personal Diary"
+            Create a new form with an ID of "entryForm"
+            Inside the form, create a textarea with class of "entry-textbox"
+        -->
+        <h1 class='title'>BrzyNotes</h1>
+            <form id='entryForm' action="">
+
+                <textarea 
+                    name="" 
+                    id="" 
+                    cols="50" 
+                    rows="25" 
+                    class='entry-textBox' 
+                    placeholder="Click here to start typing..."
+                    required
+                >
+                </textarea>
+
+                    <br>
+
+                <button class='button' type='submit'>
+                    Post
+                </button>
+
+            </form>
+
+            <section id='entries'>
+                <div class='entries-nav-div'></div>
+            </section>
+
+    </body>
+        <script src='index.js'>
+            // let modifyDocumentText = document.getElementById('fake-form')
+            // let newP = document.createElement('p')
+            // modifyDocumentText.append(newP)
+        </script>
+</html>

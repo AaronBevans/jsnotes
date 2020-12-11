@@ -1,0 +1,151 @@
+body{
+    font-size: 1.125rem;
+    margin: 0 auto;
+}
+
+header{
+    border: solid 5px white;
+    text-align: center;
+    margin: 0 1em;
+    padding: 2em 0;
+}
+
+nav ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+nav li{
+    margin: 0 1em;/*margin on left and right only*/
+   
+}
+
+
+nav a{
+    text-decoration: none;
+    color: darkslategray;
+    font-weight: 700px;
+    padding: .25em 0;
+}
+
+
+nav a:hover,
+nav a:focus{
+    color: white;
+    border-bottom: 1px solid black;
+}
+
+
+h1{
+    font-size: 2rem;
+    font-weight: 400;
+    margin: .5em;
+    text-align: center;
+}
+
+h1 span{
+    color: tan;
+}
+
+h2{
+    font-size: 1rem;
+    margin: 1em;
+}
+
+p{
+    margin: 1em;
+}
+
+
+#subtitle{
+    text-align: center;
+    font-weight: 700;
+    color: #1792d2;
+}
+
+
+
+/* Used to line up title section and navigation.*/
+
+
+
+
+@media (max-width: 675px) {
+    nav ul {
+        flex-direction: column;
+    }
+    
+    header {
+        text-align: center;
+    }
+}
+
+/*box-model/flexbox style for container and columns.*/
+
+.container{/*default container style*/
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+.columns{
+    display: flex;
+    justify-content: space-evenly;
+
+    margin: 1em 0;
+}
+
+
+.col-border{
+    border: solid 5px white;
+    margin: 10px;
+}
+
+.col-1:hover,
+.col-1:focus{
+    background: white;
+    text-decoration: none;
+}
+
+.col-2{
+    padding-top: .5em;
+}
+
+/*columns: vertical*/
+/*rows: horizontal*/
+@media (max-width: 600px){/*makes content responsive to smaller screens*/
+    .columns{
+        flex-direction: row;
+    }
+
+    .col{
+        width: 100%;
+        padding: 10px;
+    }
+
+
+}
+
+@media (min-width:400px) and (min-width: 599px){
+    body{
+        background: teal;
+    }
+}
+
+@media (max-width: 600px){
+    body{
+        background: lightblue;
+    }
+
+}
+
+
+
+
+
+
+
+

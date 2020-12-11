@@ -1,0 +1,67 @@
+body{
+    margin: 0 auto;/*equal space is given to borders.*/
+    padding: 30px;
+    text-align: center;
+    justify-content: center;
+    font-size: 18px;
+}
+/*
+    1) Add a width and a height of 100%
+    2) Position absolute (allows us to place any element exactly where we want it)
+    3) Set top, left, bottom, right to 0
+    4) Add a background colour of black
+    5) Add position relative to #modal so that it's relative to #overlay
+    6) Put the background of #modal to white (temp background no longer needed)
+    7) Add top: 30% to #modal
+*/
+
+#overlay{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0 , 0, 0.5);
+
+}
+
+#modal{
+    border: firebrick 10px solid;
+    background: white;
+    color:firebrick;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 600px;
+    height: 300px;
+    position:relative;
+    top: 30%
+}
+
+#open-modal, #close-modal{
+    border: unset;
+    background-color:firebrick;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#modal:hover, #modal:focus{
+    color: firebrick;
+}
+
+#click-to-hide:hover, #click-to-hide:focus{
+    color:black;
+}
+
+#click-to-show:hover, #click-to-show:focus{
+    color:firebrick;
+}
+
+#dev-id:hover, #dev-id:focus{
+    color:black;
+}
+
